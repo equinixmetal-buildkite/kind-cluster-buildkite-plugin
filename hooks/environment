@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [ ${BUILDKITE_PLUGIN_KIND_CLUSTER_DEBUG_PLUGIN:-false} == "true" ]; then
+	set -eux
+else
+	set -eu
+fi
+
+echo "--- :k8s: Determining Node Image"
+
+if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_CUSTOM_IMAGE:-} ]; then
+	export IMAGE=${BUILDKITE_PLUGIN_KIND_CLUSTER_CUSTOM_IMAGE}
+else
+	case ${BUILDKITE_PLUGIN_KIND_CLUSTER_K8S_VERSION:-1.22} in
+	1.23)
+		export IMAGE=kindest/node:v1.23.3@sha256:0df8215895129c0d3221cda19847d1296c4f29ec93487339149333bd9d899e5a
+  		;;
+	1.22)
+		export IMAGE=kindest/node:v1.22.5@sha256:d409e1b1b04d3290195e0263e12606e1b83d5289e1f80e54914f60cd1237499d
+		;;
+	1.21)
+		export IMAGE=kindest/node:v1.21.2@sha256:19c2315068fd5951aa478ef7b9d1771572c8ea58fbfbf7bc81f7b153679d7a6c
+  		;;
+	1.20)
+		export IMAGE=kindest/node:v1.20.7@sha256:cbeaf907fc78ac97ce7b625e4bf0de16e3ea725daf6b04f930bd14c67c671ff9
+  		;;
+        
+        esac
+
+fi
+
+if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_CONFIG_PATH:-} ];then
+	echo "--- :k8s: Setting KinD Config Path"
+	export CONFIG=" --config ${BUILDKITE_PLUGIN_KIND_CLUSTER_CONFIG_PATH} "
+fi
+
+echo "--- :k8s: Setting Cluster Name"
+export CLUSTER_NAME=buildkite-${BUILDKITE_STEP_ID:-000}

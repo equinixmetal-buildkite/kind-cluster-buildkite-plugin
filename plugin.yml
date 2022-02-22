@@ -1,0 +1,17 @@
+name: KinD Cluster
+description: Allows for creation and management of KinD clusters in a buildkite pipeline
+author: https://github.com/equinixmetal-buildkite/kind-cluster-buildkite-plugin
+requirements:
+configuration:
+  properties:
+    k8s_version:
+      type: string
+    custom_image:
+      type: string
+    kind_version:
+      type: string
+    config_path:
+      type: string
+    debug_plugin:
+      type: string
+additionalProperties: false

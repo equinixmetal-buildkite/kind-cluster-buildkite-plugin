@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ ${BUILDKITE_PLUGIN_KIND_CLUSTER_DEBUG_PLUGIN:-false} == "true" ]; then
+        set -eux
+else
+        set -eu
+fi
+
+./kind delete cluster --name ${CLUSTER_NAME}

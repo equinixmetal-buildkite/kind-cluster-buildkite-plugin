@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ ${BUILDKITE_PLUGIN_KIND_CLUSTER_DEBUG_PLUGIN:-false} == "true" ]; then
+        set -eux
+else
+        set -eu
+fi
+
+echo "--- :k8s: Uploading Logs"
+./kind export logs --name ${CLUSTER_NAME} ${CLUSTER_NAME}-kind-logs
+tar czvf "${CLUSTER_NAME}-logs.tar.gz" ${CLUSTER_NAME}-kind-logs
+buildkite-agent artifact upload ${CLUSTER_NAME}-logs.tar.gz
