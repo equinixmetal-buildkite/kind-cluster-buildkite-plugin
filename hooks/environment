@@ -11,22 +11,19 @@ echo "--- :k8s: Determining Node Image"
 if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_CUSTOM_IMAGE:-} ]; then
 	export IMAGE=${BUILDKITE_PLUGIN_KIND_CLUSTER_CUSTOM_IMAGE}
 else
-	case ${BUILDKITE_PLUGIN_KIND_CLUSTER_K8S_VERSION:-1.22} in
-	1.23)
-		export IMAGE=kindest/node:v1.23.5@sha256:a69c29d3d502635369a5fe92d8e503c09581fcd406ba6598acc5d80ff5ba81b1
+	case ${BUILDKITE_PLUGIN_KIND_CLUSTER_K8S_VERSION:-1.29} in
+	1.29)
+		export IMAGE=kindest/node:v1.29.1@sha256:aa49c4486220dc6b4ea7749407fb2ab95a50fdea155e760b3589a2a4699c0741
   		;;
-	1.22)
-		export IMAGE=kindest/node:v1.22.7@sha256:c195c17f2a9f6ad5bbddc9eb8bad68fa21709162aabf2b84e4a3896db05c0808
-		;;
-	1.21)
-		export IMAGE=kindest/node:v1.21.10@sha256:f35554e42a1081cfc9f7bce5635aea15996e4ec842b689e1508a8746de7d309b
+	1.28)
+		export IMAGE=kindest/node:v1.28.6@sha256:299852461cfe4b68212b479557cdcf1d059ce2394631814b41b5ddf6eb71fff4
   		;;
-	1.20)
-		export IMAGE=kindest/node:v1.20.15@sha256:2d93744654696ea4270c04ec83e7940177295aac99223b224b052c79d4e7693e
+	1.27)
+		export IMAGE=kindest/node:v1.27.10@sha256:b43f97a57f658b447543fb900741b461f3565634d6cc3c16a60755030c5edd18
   		;;
 	*)
 		echo "ERROR: Unsupported Version: $BUILDKITE_PLUGIN_KIND_CLUSTER_K8S_VERSION"
-		echo "ERROR: Kind Cluster Buildkite Plugin supports versions: 1.23, 1.22, 1.21 and 1.20"
+		echo "ERROR: Kind Cluster Buildkite Plugin supports versions: 1.29, 1.28 and 1.27"
 		exit 1
 		;;
         esac
