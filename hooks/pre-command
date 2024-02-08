@@ -6,12 +6,12 @@ else
         set -eu
 fi
 
-id
-
 echo "--- :k8s: Installing KinD"
 curl -Lo ${LOCAL_BIN}/kind "https://kind.sigs.k8s.io/dl/v0.21.0/kind-linux-amd64"
 chmod +x ${LOCAL_BIN}/kind
 
+id
+pwd
 ls -la ${LOCAL_BIN}
 
 echo "--- :k8s: Creating Cluster - ${CLUSTER_NAME}"
