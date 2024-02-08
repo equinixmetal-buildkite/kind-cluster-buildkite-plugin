@@ -7,7 +7,7 @@ else
 fi
 
 echo "--- :k8s: Installing kubectl"
-curl -Lo ${LOCAL_BIN}/kubectl https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${ARCH}/kubectl && \
+curl -Lo ${LOCAL_BIN}/kubectl https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl && \
 chmod +x ${LOCAL_BIN}/kubectl
 
 echo "--- :k8s: Installing KinD"
