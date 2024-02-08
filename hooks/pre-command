@@ -6,16 +6,13 @@ else
         set -eu
 fi
 
+echo "--- :k8s: Installing kubectl"
+curl -Lo ${LOCAL_BIN}/kubectl https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${ARCH}/kubectl && \
+chmod +x ${LOCAL_BIN}/kubectl
+
 echo "--- :k8s: Installing KinD"
 curl -Lo ${LOCAL_BIN}/kind "https://kind.sigs.k8s.io/dl/v0.21.0/kind-linux-amd64"
 chmod +x ${LOCAL_BIN}/kind
-
-id
-pwd
-echo $HOME
-ls -la ~
-echo $LOCAL_BIN
-ls -la ${LOCAL_BIN}
 
 echo "--- :k8s: Creating Cluster - ${CLUSTER_NAME}"
 kind create cluster --name ${CLUSTER_NAME} --image ${IMAGE} ${KIND_CONFIG:-} --wait 2m
