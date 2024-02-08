@@ -6,13 +6,15 @@ else
         set -eu
 fi
 
+mkdir ~/bin
+
 echo "--- :k8s: Installing KinD"
-curl -Lo ./kind "https://kind.sigs.k8s.io/dl/v0.21.0/kind-linux-amd64"
-chmod +x ./kind
+curl -Lo ${LOCAL_BIN}/kind "https://kind.sigs.k8s.io/dl/v0.21.0/kind-linux-amd64"
+chmod +x ${LOCAL_BIN}/kind
 
 echo "--- :k8s: Creating Cluster - ${CLUSTER_NAME}"
-./kind create cluster --name ${CLUSTER_NAME} --image ${IMAGE} ${KIND_CONFIG:-} --wait 2m
+kind create cluster --name ${CLUSTER_NAME} --image ${IMAGE} ${KIND_CONFIG:-} --wait 2m
 
 echo "--- :k8s: Setting Kubeconfig"
-./kind export kubeconfig --name ${CLUSTER_NAME} --kubeconfig ./kubeconfig-${CLUSTER_NAME}
+kind export kubeconfig --name ${CLUSTER_NAME} --kubeconfig ./kubeconfig-${CLUSTER_NAME}
 export KUBECONFIG=$(pwd)/kubeconfig-${CLUSTER_NAME}

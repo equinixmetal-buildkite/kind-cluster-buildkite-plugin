@@ -37,3 +37,8 @@ fi
 
 echo "--- :k8s: Setting Cluster Name"
 export CLUSTER_NAME=buildkite-${BUILDKITE_STEP_ID:-000}
+
+echo "--- :bash: Setting local bin path"
+export LOCAL_BIN=~/.local/bin
+mkdir -p $LOCAL_BIN
+export PATH=$PATH:$LOCAL_BIN
