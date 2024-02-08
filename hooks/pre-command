@@ -12,6 +12,7 @@ chmod +x ${LOCAL_BIN}/kind
 
 id
 pwd
+ls -la ~
 ls -la ${LOCAL_BIN}
 
 echo "--- :k8s: Creating Cluster - ${CLUSTER_NAME}"
