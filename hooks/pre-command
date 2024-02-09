@@ -7,19 +7,12 @@ else
 fi
 
 export KIND_VERSION=${BUILDKITE_PLUGIN_KIND_CLUSTER_KIND_VERSION:-v0.21.0}
-export HELM_VERSION=v3.14.0
+export HELM_VERSION=${BUILDKITE_PLUGIN_KIND_CLUSTER_HELM_VERSION:-v3.14.0}
 
 echo "--- :k8s: Installing KinD"
 curl -Lo ${LOCAL_BIN}/kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64"
 chmod +x ${LOCAL_BIN}/kind
 kind version
-
-echo "--- :k8s: Creating Cluster - ${CLUSTER_NAME}"
-kind create cluster --name ${CLUSTER_NAME} --image ${IMAGE} ${KIND_CONFIG:-} --wait 2m
-
-echo "--- :k8s: Setting Kubeconfig"
-kind export kubeconfig --name ${CLUSTER_NAME} --kubeconfig ./kubeconfig-${CLUSTER_NAME}
-export KUBECONFIG=$(pwd)/kubeconfig-${CLUSTER_NAME}
 
 echo "--- :k8s: Installing kubectl"
 curl -Lo ${LOCAL_BIN}/kubectl https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl && \
@@ -33,3 +26,11 @@ tar xzf helm-${HELM_VERSION}-linux-amd64.tar.gz linux-amd64/helm && \
   rmdir linux-amd64 && \
   rm helm-${HELM_VERSION}-linux-amd64.tar.gz
 helm version
+
+echo "--- :k8s: Creating Cluster - ${CLUSTER_NAME}"
+kind create cluster --name ${CLUSTER_NAME} --image ${IMAGE} ${KIND_CONFIG:-} --wait 2m
+
+echo "--- :k8s: Setting Kubeconfig"
+kind export kubeconfig --name ${CLUSTER_NAME} --kubeconfig ./kubeconfig-${CLUSTER_NAME}
+export KUBECONFIG=$(pwd)/kubeconfig-${CLUSTER_NAME}
+

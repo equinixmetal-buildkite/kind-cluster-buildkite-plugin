@@ -10,6 +10,8 @@ configuration:
       type: string
     kind_version:
       type: string
+    helm_version:
+      type: string
     config_path:
       type: string
     debug_plugin:
