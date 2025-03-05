@@ -12,8 +12,17 @@ if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_CUSTOM_IMAGE:-} ]; then
 	export IMAGE=${BUILDKITE_PLUGIN_KIND_CLUSTER_CUSTOM_IMAGE}
 else
 	case ${BUILDKITE_PLUGIN_KIND_CLUSTER_K8S_VERSION:-1.29} in
+	1.32)
+		export IMAGE=kindest/node:v1.32.2@sha256:f226345927d7e348497136874b6d207e0b32cc52154ad8323129352923a3142f
+  		;;
+	1.31)
+		export IMAGE=kindest/node:v1.31.6@sha256:28b7cbb993dfe093c76641a0c95807637213c9109b761f1d422c2400e22b8e87
+  		;;
+	1.30)
+		export IMAGE=kindest/node:v1.30.10@sha256:4de75d0e82481ea846c0ed1de86328d821c1e6a6a91ac37bf804e5313670e507
+  		;;
 	1.29)
-		export IMAGE=kindest/node:v1.29.1@sha256:aa49c4486220dc6b4ea7749407fb2ab95a50fdea155e760b3589a2a4699c0741
+		export IMAGE=kindest/node:v1.29.14@sha256:8703bd94ee24e51b778d5556ae310c6c0fa67d761fae6379c8e0bb480e6fea29
   		;;
 	1.28)
 		export IMAGE=kindest/node:v1.28.6@sha256:299852461cfe4b68212b479557cdcf1d059ce2394631814b41b5ddf6eb71fff4
@@ -23,7 +32,7 @@ else
   		;;
 	*)
 		echo "ERROR: Unsupported Version: $BUILDKITE_PLUGIN_KIND_CLUSTER_K8S_VERSION"
-		echo "ERROR: Kind Cluster Buildkite Plugin supports versions: 1.29, 1.28 and 1.27"
+		echo "ERROR: Kind Cluster Buildkite Plugin supports versions: 1.32, 1.31, 1.30, 1.29, 1.28 and 1.27"
 		exit 1
 		;;
         esac
@@ -37,6 +46,7 @@ fi
 
 echo "--- :k8s: Setting Cluster Name"
 export CLUSTER_NAME=buildkite-${BUILDKITE_STEP_ID:-000}
+echo "The KinD cluster name is: ${CLUSTER_NAME}"
 
 echo "--- :bash: Setting local bin path"
 export LOCAL_BIN=~/.local/bin
