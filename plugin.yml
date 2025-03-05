@@ -16,6 +16,4 @@ configuration:
       type: string
     debug_plugin:
       type: string
-    debug_plugin:
-      type: string
 additionalProperties: false
