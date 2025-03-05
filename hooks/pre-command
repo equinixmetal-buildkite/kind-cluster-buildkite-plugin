@@ -34,5 +34,6 @@ echo "--- :k8s: Setting Kubeconfig"
 KUBECONFIG_FILENAME=${BUILDKITE_PLUGIN_KIND_CLUSTER_KUBECONFIG_FILENAME:-kubeconfig-${CLUSTER_NAME}}
 export KUBECONFIG=$(pwd)/${KUBECONFIG_FILENAME}
 kind export kubeconfig --name ${CLUSTER_NAME} --kubeconfig ${KUBECONFIG}
+chmod 644 ${KUBECONFIG}
 echo "Saved the kubeconfig to ${KUBECONFIG}"
-
+stat ${KUBECONFIG}
